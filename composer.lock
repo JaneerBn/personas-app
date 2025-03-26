@@ -4990,7 +4990,7 @@
             "description": "Maps an HTTP request to a set of configuration variables",
             "homepage": "https://symfony.com",
             "keywords": [
-                "router",
+                "route",
                 "routing",
                 "uri",
                 "url"
