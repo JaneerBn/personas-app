@@ -12,3 +12,7 @@ class Municipio extends Model
     protected $primaryKey = 'depa_codi'; 
     public $incrementing = false;  
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6c98d03d21eee59d6ed470655884a96330737aba
