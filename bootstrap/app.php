@@ -1,74 +1,118 @@
 <?php
 
-<<<<<<< HEAD
-/*
-|--------------------------------------------------------------------------
-| Create The Application
-|--------------------------------------------------------------------------
-|
-| The first thing we will do is create a new Laravel application instance
-| which serves as the "glue" for all the components of Laravel, and is
-| the IoC container for the system binding all of the various parts.
-|
-*/
+return [
 
-$app = new Illuminate\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
-);
+    /*
+    |--------------------------------------------------------------------------
+    | Default Mailer
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the default mailer that is used to send any email
+    | messages sent by your application. Alternative mailers may be setup
+    | and used as needed; however, this mailer will be used by default.
+    |
+    */
 
-/*
-|--------------------------------------------------------------------------
-| Bind Important Interfaces
-|--------------------------------------------------------------------------
-|
-| Next, we need to bind some important interfaces into the container so
-| we will be able to resolve them when needed. The kernels serve the
-| incoming requests to this application from both the web and CLI.
-|
-*/
+    'default' => env('MAIL_MAILER', 'smtp'),
 
-$app->singleton(
-    Illuminate\Contracts\Http\Kernel::class,
-    App\Http\Kernel::class
-);
+    /*
+    |--------------------------------------------------------------------------
+    | Mailer Configurations
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure all of the mailers used by your application plus
+    | their respective settings. Several examples have been configured for
+    | you and you are free to add your own as your application requires.
+    |
+    | Laravel supports a variety of mail "transport" drivers to be used while
+    | sending an e-mail. You will specify which one you are using for your
+    | mailers below. You are free to add additional mailers as required.
+    |
+    | Supported: "smtp", "sendmail", "mailgun", "ses",
+    |            "postmark", "log", "array", "failover"
+    |
+    */
 
-$app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    App\Console\Kernel::class
-);
+    'mailers' => [
+        'smtp' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+        ],
 
-$app->singleton(
-    Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Exceptions\Handler::class
-);
+        'ses' => [
+            'transport' => 'ses',
+        ],
 
-/*
-|--------------------------------------------------------------------------
-| Return The Application
-|--------------------------------------------------------------------------
-|
-| This script returns the application instance. The instance is given to
-| the calling script so we can separate the building of the instances
-| from the actual running of the application and sending responses.
-|
-*/
+        'mailgun' => [
+            'transport' => 'mailgun',
+        ],
 
-return $app;
-=======
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Exceptions;
-use Illuminate\Foundation\Configuration\Middleware;
+        'postmark' => [
+            'transport' => 'postmark',
+        ],
 
-return Application::configure(basePath: dirname(__DIR__))
-    ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
-        health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware) {
-        //
-    })
-    ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
->>>>>>> 6c98d03d21eee59d6ed470655884a96330737aba
+        'sendmail' => [
+            'transport' => 'sendmail',
+            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+        ],
+
+        'log' => [
+            'transport' => 'log',
+            'channel' => env('MAIL_LOG_CHANNEL'),
+        ],
+
+        'array' => [
+            'transport' => 'array',
+        ],
+
+        'failover' => [
+            'transport' => 'failover',
+            'mailers' => [
+                'smtp',
+                'log',
+            ],
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global "From" Address
+    |--------------------------------------------------------------------------
+    |
+    | You may wish for all e-mails sent by your application to be sent from
+    | the same address. Here, you may specify a name and address that is
+    | used globally for all e-mails that are sent by your application.
+    |
+    */
+
+    'from' => [
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('MAIL_FROM_NAME', 'Example'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Markdown Mail Settings
+    |--------------------------------------------------------------------------
+    |
+    | If you are using Markdown based email rendering, you may configure your
+    | theme and component paths here, allowing you to customize the design
+    | of the emails. Or, you may simply stick with the Laravel defaults!
+    |
+    */
+
+    'markdown' => [
+        'theme' => 'default',
+
+        'paths' => [
+            resource_path('views/vendor/mail'),
+        ],
+    ],
+
+];
