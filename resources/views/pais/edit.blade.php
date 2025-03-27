@@ -8,39 +8,38 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Add Comuna</title>
+    <title>Edit Country</title>
   </head>
   <body>
-    <div Class = "container">
-    <h1>Add Comuna</h1>
-    <form method = "POST" action = "{{route('comunas.store') }}">
-    @csrf
+    <div class="container">
+       <h1>Edit Country</h1>
+       <form method="POST" action="{{ route('paises.update', ['pais' => $pais->pais_codi]) }}">
+       @method('put')
+       @csrf
   <div class="mb-3">
-    <label for="id" class="form-label">Code</label>
-    <input type="text" class="form-control" id="id" aria-describedby="idHelp" name="id"
-        disabled = "disabled">
-    <div id="idHelp" class="form-text">Commune code</div>
+    <label for="codigo" class="form-label">Id</label>
+    <input type="text" class="form-control" id="id" aria-describedby="codigoHelp" name="id"
+      disabled = "disabled" value="{{ $pais->pais_codi}}">
+    <div id="codigoHelp" class="form-text">Country Id</div>
   </div>
   <div class="mb-3">
-    <label for="name" class="form-label">Commune</label>
-    <input type="text" required class="form-control" id= "name" aria-describedby = "nameHelp"
-        name = "name" placeholder = "comuna.name">
+    <label for="name" class="form-label">Country</label>
+    <input type="text" required class="form-control" id="name" placeholder="Country name"
+    name="name" value="{{ $pais->pais_nomb}}" >
   </div>
-
-    <label for = "municipality">Municipality:</label>
-    <select class = "form-select" id="municipality" name = "code" required>
-        <option selected disabled value = "">Choose one...</option>
-        @foreach ($municipios as $municipio)
-            <option value = "{{$municipio -> muni_codi}}"> {{$municipio -> muni_nomb}} </option>
-        @endforeach
+  <label for="capital">Capital:</label>
+  <select class="form-select" id="capital" name="code" required>
+  <option selected disabled value="">Chose one...</option>
+  @foreach ($paises as $pais)
+    <option value="{{ $pais->pais_codi }}">{{ $pais->pais_nomb}}</option>
+  @endforeach
 </select>
-  <div class = "mt-3">
-    <button type = "submit" class = "btn btn-primary"> save </button>
-    <a href = "{{route ('comunas.index') }}" class = "btn btn-warning">Cancel</a>
+    <div class="mb-3">
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="{{ route('paises.index') }}" class="btn btn-warning">Cancel</a>
   </div>
-</form>
+</form> 
 </div>
-
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
